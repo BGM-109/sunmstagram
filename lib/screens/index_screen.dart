@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sunmstagram/screens/home_screen.dart';
+import 'package:sunmstagram/screens/initial_screen.dart';
 
 class IndexScreen extends StatelessWidget {
   const IndexScreen({Key? key}) : super(key: key);
@@ -17,9 +18,9 @@ class IndexScreen extends StatelessWidget {
           } else if (snapshot.hasData) {
             return const HomeScreen();
           } else if (snapshot.hasError) {
-            return const Center(child: Text("Error"));
+            return const InitialScreen();
           } else {
-            return const Center(child:Text("Not Logged"));
+            return const InitialScreen();
           }
         },
       ),

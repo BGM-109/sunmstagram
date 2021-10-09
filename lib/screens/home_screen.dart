@@ -13,31 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _auth = FirebaseAuth.instance;
-  late User loggedInUser;
   int _selectedIndex = 0;
-
-  void signOut() {
-    _auth.signOut();
-  }
-
-  void getCurrentUser() {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-        print(loggedInUser);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
 
   final List<Widget> _widgetOptions = const <Widget>[
     MainScreen(),

@@ -10,10 +10,7 @@ class MainScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             "Instagram",
-            style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
           actions: [
             IconButton(
               onPressed: () {
@@ -24,9 +21,6 @@ class MainScreen extends StatelessWidget {
               ),
             )
           ],
-          actionsIconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
         ),
         body: const Center(
           child: Text("Main"),

@@ -7,7 +7,6 @@ import 'package:sunmstagram/screens/home_screen.dart';
 import 'package:sunmstagram/screens/index_screen.dart';
 import 'package:sunmstagram/screens/initial_screen.dart';
 import 'package:sunmstagram/screens/login_screens.dart';
-import 'package:sunmstagram/screens/post_detail_screen.dart';
 import 'package:sunmstagram/screens/register_screen.dart';
 
 void main() async {
@@ -27,6 +26,13 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primaryColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.black),
+            actionsIconTheme: IconThemeData(color: Colors.black),
+            titleTextStyle: TextStyle(color: Colors.black),
+          ),
         ),
         initialRoute: InitialScreen.id,
         routes: {

@@ -39,11 +39,64 @@ class _CreateScreenState extends State<CreateScreen> {
     }
   }
 
+  void uploadPost(BuildContext context) {
+    final firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('post')
+        .child('${DateTime.now().millisecondsSinceEpoch}.png');
+
+    final task = firebaseStorageRef.putFile(
+        image!, SettableMetadata(contentType: 'image/png'));
+    task.then((value) {
+      var downloadUrl = value.ref.getDownloadURL();
+
+      downloadUrl.then((uri) {
+        CollectionReference doc = FirebaseFirestore.instance.collection('post');
+        doc.add({
+          'photoUrl': uri.toString(),
+          'contents': contents!,
+          'title': title!,
+          'location': location!,
+          'email': user.email!,
+          'author': user.displayName!,
+          'userProfileUrl': user.photoURL!,
+        }).then((value) {
+          print("User Added");
+          Navigator.pop(context);
+        }).catchError((error) => print("Failed to add user: $error"));
+        ;
+      });
+    });
+  }
+
+  Future _showDialog(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("빈칸"),
+          content: const Text("정보를 넣어주세요"),
+          actions: [
+            TextButton(
+              child: const Text("네"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          iconTheme: const IconThemeData(
+            color: Colors.white
+          ),
           elevation: 0,
           leading: IconButton(
             icon: const Icon(
@@ -53,38 +106,18 @@ class _CreateScreenState extends State<CreateScreen> {
           ),
           backgroundColor: Colors.black,
           title: const Text("새 게시물"),
+          titleTextStyle: const TextStyle(color:Colors.white),
           actions: [
             TextButton(
               onPressed: () {
-                final firebaseStorageRef = FirebaseStorage.instance
-                    .ref()
-                    .child('post')
-                    .child('${DateTime.now().millisecondsSinceEpoch}.png');
-
-                final task = firebaseStorageRef.putFile(
-                    image!, SettableMetadata(contentType: 'image/png'));
-                task.then((value) {
-                  var downloadUrl = value.ref.getDownloadURL();
-
-                  downloadUrl.then((uri) {
-                    CollectionReference doc =
-                        FirebaseFirestore.instance.collection('post');
-                    doc.add({
-                      'photoUrl': uri.toString(),
-                      'contents': contents!,
-                      'title': title!,
-                      'location': location!,
-                      'email': user.email!,
-                      'author': user.displayName!,
-                      'userProfileUrl': user.photoURL!,
-                    }).then((value) {
-                      print("User Added");
-                      Navigator.pop(context);
-                    }).catchError(
-                        (error) => print("Failed to add user: $error"));
-                    ;
-                  });
-                });
+                if (image != null &&
+                    title != null &&
+                    contents != null &&
+                    location != null) {
+                  uploadPost(context);
+                } else {
+                  _showDialog(context);
+                }
               },
               child: const Text("등록"),
             )

@@ -11,22 +11,17 @@ class PostDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Detail"),
-        titleTextStyle: const TextStyle(
-          color: Colors.black,
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: post.doc(docId).get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Center(child: Text("Something went wrong"));
           }
 
           if (snapshot.hasData && !snapshot.data!.exists) {
-            return Text("Document does not exist");
+            return const Center(child: Text("Document does not exist"));
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
@@ -35,7 +30,7 @@ class PostDetailScreen extends StatelessWidget {
             return Center(child: Text("${data['title']} ${data['contents']}"));
           }
 
-          return Text("loading");
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

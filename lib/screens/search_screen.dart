@@ -19,10 +19,7 @@ class _SearchScreenState extends State<SearchScreen> {
       appBar: AppBar(
         title: const Text(
           "Search",
-          style: TextStyle(color: Colors.black),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _postsStream,
@@ -32,7 +29,10 @@ class _SearchScreenState extends State<SearchScreen> {
             } else if (snapshot.hasError) {
               return const Center(child: Text("has Error"));
             } else if (snapshot.hasData) {
-              return ListView(
+              return GridView(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
