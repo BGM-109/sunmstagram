@@ -37,7 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   String docId = document.id;
-                  return ListTile(
+                  return InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -46,8 +46,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       );
                     },
-                    title: Text(data['title']),
-                    subtitle: Text(data['contents']),
+                    child: Image.network(
+                      data['photoUrl']!,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 }).toList(),
               );
