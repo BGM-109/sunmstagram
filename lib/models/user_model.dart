@@ -1,22 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class User {
+class MyUser {
   final String? userName;
   final String? profileImage;
 
-  User({this.userName, this.profileImage});
+  MyUser({this.userName, this.profileImage});
 
-  factory User.fromMap(Map data) {
+  factory MyUser.fromMap(Map data) {
     data = data ?? {};
-    return User(
+    return MyUser(
       userName: data['userName'] ?? '',
       profileImage: data['profileImage'] ?? '',
     );
   }
 
-  factory User.fromFirestore(DocumentSnapshot doc) {
-    Map<dynamic, dynamic> data = doc.data as Map<dynamic, dynamic>;
-    return User(
+  factory MyUser.fromFirestore(QueryDocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data as Map<String, dynamic>;
+    return MyUser(
       userName: data['userName'] ?? '',
       profileImage: data['profileImage'] ?? '',
     );
