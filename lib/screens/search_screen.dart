@@ -46,9 +46,12 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       );
                     },
-                    child: Image.network(
-                      data['photoUrl']!,
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: "img$docId",
+                      child: Image.network(
+                        data['photoUrl']!,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   );
                 }).toList(),

@@ -39,20 +39,23 @@ class PostDetailScreen extends StatelessWidget {
                     backgroundImage: NetworkImage(data['userProfileUrl']),
                   ),
                   title: Row(
-                    children: const [
-                      Text("realyoonchang",
-                          style: TextStyle(fontWeight: FontWeight.w600)),
-                      Text("팔로우", style: TextStyle(color: Colors.blue))
+                    children: [
+                      Text(data['author'],
+                          style: const TextStyle(fontWeight: FontWeight.w600)),
+                      const Text("팔로우", style: TextStyle(color: Colors.blue))
                     ],
                   ),
-                  subtitle: Text("짐박스"),
-                  trailing: Icon(Icons.more_horiz),
+                  subtitle: Text(data['location']),
+                  trailing: const Icon(Icons.more_horiz),
                 ),
                 AspectRatio(
                     aspectRatio: 1 / 1,
-                    child: Image.network(
-                      data['photoUrl'],
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: "img$docId",
+                      child: Image.network(
+                        data['photoUrl'],
+                        fit: BoxFit.cover,
+                      ),
                     )),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -74,7 +77,7 @@ class PostDetailScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
+                    children: const [
                       Text("님외 1278명이 좋아합니다."),
                       Text("userId postContent 더보기")
                     ],
